@@ -18,14 +18,19 @@ protocol ProfileViewProtocol: class {
     func update(pinnedItems: [RepositoryCellItem])
     func update(topItems: [RepositoryCellItem])
     func update(starredItems: [RepositoryCellItem])
+    
+    func errorOccured(error: String)
 }
 
 class ProfileViewController: UIViewController {
     
     var presenter: ProfilePresenter!
+    
     var pinnedItems: [RepositoryCellItem]?
     var topItems: [RepositoryCellItem]?
     var starredItems: [RepositoryCellItem]?
+    
+    var refreshControl: UIRefreshControl?
     
     lazy var profileView: ProfileView = {
         let view = ProfileView()
@@ -48,10 +53,29 @@ class ProfileViewController: UIViewController {
         
         presenter = ProfilePresenter(view: self)
         presenter.viewDidLoad()
+        
+        refreshControl = UIRefreshControl()
+        refreshControl!.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        profileView.scrollView.refreshControl = refreshControl
     }
     
     override func loadView() {
         view = profileView
+    }
+    
+    @objc func refresh() {
+        presenter.onRefresh()
+        refreshControl!.endRefreshing()
+    }
+    
+    func showMessage(_ title: String?, message msg: String?) {
+        let alert = UIAlertController(title: title, message: msg, preferredStyle: .alert)
+        
+        let cancel = UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: {(_ action: UIAlertAction?) -> Void in
+            alert.dismiss(animated: true) {() -> Void in }
+        })
+        alert.addAction(cancel)
+        self.present(alert, animated: true)
     }
 
 }
@@ -95,6 +119,10 @@ extension ProfileViewController: ProfileViewProtocol {
     func update(starredItems: [RepositoryCellItem]) {
         self.starredItems = starredItems
         profileView.starredCollectionView.reloadData()
+    }
+    
+    func errorOccured(error: String) {
+        showMessage("Error", message: error)
     }
 }
 

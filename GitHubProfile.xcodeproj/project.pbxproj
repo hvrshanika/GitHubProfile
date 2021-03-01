@@ -23,6 +23,7 @@
 		4F93AA7825EC8DD800DE6B33 /* Queries.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4F93AA7725EC8DD800DE6B33 /* Queries.graphql */; };
 		4F93AA7E25EC8F0400DE6B33 /* Apollo in Frameworks */ = {isa = PBXBuildFile; productRef = 4F93AA7D25EC8F0400DE6B33 /* Apollo */; };
 		4F93AA9025EC94CD00DE6B33 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F93AA8F25EC94CD00DE6B33 /* API.swift */; };
+		4F9C166225ED501D00267778 /* Obfuscator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9C166125ED501D00267778 /* Obfuscator.swift */; };
 		4FCD469C25ECC51A00E64DED /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCD469B25ECC51A00E64DED /* ProfileView.swift */; };
 		4FCD46A125ECDBE500E64DED /* UIImageView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCD46A025ECDBE500E64DED /* UIImageView+Extensions.swift */; };
 		4FCD46A925ECE6C800E64DED /* RepositoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCD46A825ECE6C800E64DED /* RepositoryCell.swift */; };
@@ -68,6 +69,7 @@
 		4F93AA6F25EC8DA200DE6B33 /* Apollo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Apollo.swift; sourceTree = "<group>"; };
 		4F93AA7725EC8DD800DE6B33 /* Queries.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Queries.graphql; sourceTree = "<group>"; };
 		4F93AA8F25EC94CD00DE6B33 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		4F9C166125ED501D00267778 /* Obfuscator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Obfuscator.swift; sourceTree = "<group>"; };
 		4FCD469B25ECC51A00E64DED /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		4FCD46A025ECDBE500E64DED /* UIImageView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extensions.swift"; sourceTree = "<group>"; };
 		4FCD46A825ECE6C800E64DED /* RepositoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryCell.swift; sourceTree = "<group>"; };
@@ -223,6 +225,7 @@
 				4F93AA6F25EC8DA200DE6B33 /* Apollo.swift */,
 				4F93AA7725EC8DD800DE6B33 /* Queries.graphql */,
 				4F93AA8F25EC94CD00DE6B33 /* API.swift */,
+				4F9C166125ED501D00267778 /* Obfuscator.swift */,
 			);
 			path = GraphQL;
 			sourceTree = "<group>";
@@ -399,6 +402,7 @@
 				4F93AA5B25EBE48400DE6B33 /* UIFont+Extensions.swift in Sources */,
 				4F93AA9025EC94CD00DE6B33 /* API.swift in Sources */,
 				4F7672A425EBB9C500B7CFB4 /* SceneDelegate.swift in Sources */,
+				4F9C166225ED501D00267778 /* Obfuscator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

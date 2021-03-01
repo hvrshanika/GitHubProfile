@@ -8,14 +8,15 @@
 import Foundation
 import Apollo
 
-//ee341075d736dffc3965b0dda70985fe26ca560d
+enum Constants {
+    static let pat: [UInt8] = [118, 69, 21, 32, 82, 10, 80, 83, 83, 64, 84, 127, 50, 126, 86, 12, 85, 85, 77, 118, 22, 65, 119, 86, 13, 81, 84, 4, 17, 7, 124, 53, 41, 6, 83, 6, 6, 71, 114, 18]
+}
 
 class Apollo {
     
     static let shared = Apollo()
     
     private(set) lazy var client: ApolloClient = {
-        // The cache is necessary to set up the store, which we're going to hand to the provider
         let cache = InMemoryNormalizedCache()
         let store = ApolloStore(cache: cache)
         
@@ -24,9 +25,8 @@ class Apollo {
         let url = URL(string: "https://api.github.com/graphql")!
         
         
-        
         let requestChainTransport = RequestChainNetworkTransport(interceptorProvider: provider, endpointURL: url,
-                                                                 additionalHeaders: ["Authorization": "Bearer ee341075d736dffc3965b0dda70985fe26ca560d"])
+                                                                 additionalHeaders: ["Authorization": "Bearer \(Obfuscator().reveal(key: Constants.pat))"])
         
         return ApolloClient(networkTransport: requestChainTransport,
                             store: store)
@@ -34,9 +34,6 @@ class Apollo {
 }
 
 struct NetworkInterceptorProvider: InterceptorProvider {
-    
-    // These properties will remain the same throughout the life of the `InterceptorProvider`, even though they
-    // will be handed to different interceptors.
     private let store: ApolloStore
     private let client: URLSessionClient
     

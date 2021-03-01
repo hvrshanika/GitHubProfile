@@ -10,6 +10,7 @@ import Foundation
 protocol ItemsViewPresenter: class {
     init(view: ProfileViewProtocol)
     func viewDidLoad()
+    func onRefresh()
 }
 
 class ProfilePresenter: ItemsViewPresenter {
@@ -21,6 +22,10 @@ class ProfilePresenter: ItemsViewPresenter {
     }
     
     func viewDidLoad() {
+        fetchProfileInfo()
+    }
+    
+    func onRefresh() {
         fetchProfileInfo()
     }
     
@@ -38,7 +43,7 @@ class ProfilePresenter: ItemsViewPresenter {
             }
                 
           case .failure(let error):
-            print("Error loading data \(error)")
+            self.view?.errorOccured(error: error.localizedDescription)
           }
         }
     }
