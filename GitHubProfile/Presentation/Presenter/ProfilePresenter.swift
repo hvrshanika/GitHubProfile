@@ -26,6 +26,7 @@ class ProfilePresenter: ItemsViewPresenter {
     }
     
     func onRefresh() {
+        Apollo.shared.client.clearCache()
         fetchProfileInfo()
     }
     
@@ -65,7 +66,8 @@ class ProfilePresenter: ItemsViewPresenter {
             let repo = node?.fragments.repositoryFragment
             pinnedItems.append(processRepository(repo: repo))
         }
-        self.view?.update(pinnedItems: pinnedItems)
+        let viewHeight = (pinnedItems.count * 160) + 10
+        self.view?.update(pinnedItems: pinnedItems, hasItems: pinnedItems.count > 0, viewHeight: viewHeight)
     }
     
     private func processTopItems(userProfile: UserProfileQuery.Data.User) {
@@ -74,7 +76,7 @@ class ProfilePresenter: ItemsViewPresenter {
             let repo = node?.fragments.repositoryFragment
             topItems.append(processRepository(repo: repo))
         }
-        self.view?.update(topItems: topItems)
+        self.view?.update(topItems: topItems, hasItems: topItems.count > 0)
     }
     
     private func processStarredItems(userProfile: UserProfileQuery.Data.User) {
@@ -83,7 +85,7 @@ class ProfilePresenter: ItemsViewPresenter {
             let repo = node?.fragments.repositoryFragment
             starredItems.append(processRepository(repo: repo))
         }
-        self.view?.update(starredItems: starredItems)
+        self.view?.update(starredItems: starredItems, hasItems: starredItems.count > 0)
     }
     
     private func processRepository(repo: RepositoryFragment?) -> RepositoryCellItem {

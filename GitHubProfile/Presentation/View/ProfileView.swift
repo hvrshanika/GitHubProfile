@@ -190,6 +190,40 @@ class ProfileView: UIView {
         return collectionView
     }()
     
+    lazy var lblNoPinnedItems: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .center
+        label.text = "No pinned repositories found"
+        label.textColor = .darkGray
+        label.font = UIFont.appRegularFontWith(size: 14)
+        label.isHidden = true
+        return label
+    }()
+    
+    lazy var lblNoTopItems: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .center
+        label.text = "No top repositories found"
+        label.textColor = .darkGray
+        label.font = UIFont.appRegularFontWith(size: 14)
+        label.isHidden = true
+        return label
+    }()
+    
+    lazy var lblNoStarredItems: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .center
+        label.text = "No starred repositories found"
+        label.textColor = .darkGray
+        label.font = UIFont.appRegularFontWith(size: 14)
+        label.isHidden = true
+        return label
+    }()
+    
+    var pinnedCollecTionVIewHeightConstraint: NSLayoutConstraint?
     let viewAllBtnAttributes: [NSAttributedString.Key : Any] = [NSAttributedString.Key.underlineStyle: 1,
                                                       NSAttributedString.Key.font: UIFont.appSemiBoldFontWith(size: 16),
                                                       NSAttributedString.Key.foregroundColor: UIColor.black]
@@ -230,6 +264,10 @@ class ProfileView: UIView {
         setupStarredLabel()
         setupStarredViewAllButton()
         setupStarredCollectionView()
+        
+        setupNoPinnedItemsLabel()
+        setupNoTopItemsLabel()
+        setupNoStarredItemsLabel()
     }
     
     private func setupScrollView() {
@@ -362,7 +400,18 @@ class ProfileView: UIView {
             pinnedCollectionView.topAnchor.constraint(equalTo: lblPinned.bottomAnchor, constant: 10),
             pinnedCollectionView.leadingAnchor.constraint(equalTo: mainView.leadingAnchor),
             pinnedCollectionView.trailingAnchor.constraint(equalTo: mainView.trailingAnchor),
-            pinnedCollectionView.heightAnchor.constraint(equalToConstant: 500),
+        ])
+        pinnedCollecTionVIewHeightConstraint = pinnedCollectionView.heightAnchor.constraint(equalToConstant: 490)
+        pinnedCollecTionVIewHeightConstraint?.isActive = true
+    }
+    
+    private func setupNoPinnedItemsLabel() {
+        mainView.addSubview(lblNoPinnedItems)
+        NSLayoutConstraint.activate([
+            lblNoPinnedItems.topAnchor.constraint(equalTo: lblPinned.bottomAnchor, constant: 10),
+            lblNoPinnedItems.leadingAnchor.constraint(equalTo: mainView.leadingAnchor),
+            lblNoPinnedItems.trailingAnchor.constraint(equalTo: mainView.trailingAnchor),
+            lblNoPinnedItems.heightAnchor.constraint(equalToConstant: 160),
         ])
     }
     
@@ -392,6 +441,16 @@ class ProfileView: UIView {
         ])
     }
     
+    private func setupNoTopItemsLabel() {
+        mainView.addSubview(lblNoTopItems)
+        NSLayoutConstraint.activate([
+            lblNoTopItems.topAnchor.constraint(equalTo: lblTop.bottomAnchor, constant: 10),
+            lblNoTopItems.leadingAnchor.constraint(equalTo: mainView.leadingAnchor),
+            lblNoTopItems.trailingAnchor.constraint(equalTo: mainView.trailingAnchor),
+            lblNoTopItems.heightAnchor.constraint(equalToConstant: 160),
+        ])
+    }
+    
     private func setupStarredLabel() {
         mainView.addSubview(lblStarred)
         NSLayoutConstraint.activate([
@@ -417,6 +476,16 @@ class ProfileView: UIView {
             starredCollectionView.heightAnchor.constraint(equalToConstant: 160),
             
             mainView.bottomAnchor.constraint(equalTo: starredCollectionView.bottomAnchor)
+        ])
+    }
+    
+    private func setupNoStarredItemsLabel() {
+        mainView.addSubview(lblNoStarredItems)
+        NSLayoutConstraint.activate([
+            lblNoStarredItems.topAnchor.constraint(equalTo: lblStarred.bottomAnchor, constant: 10),
+            lblNoStarredItems.leadingAnchor.constraint(equalTo: mainView.leadingAnchor),
+            lblNoStarredItems.trailingAnchor.constraint(equalTo: mainView.trailingAnchor),
+            lblNoStarredItems.heightAnchor.constraint(equalToConstant: 160),
         ])
     }
     

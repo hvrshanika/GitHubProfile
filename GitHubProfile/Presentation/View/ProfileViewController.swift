@@ -15,9 +15,9 @@ protocol ProfileViewProtocol: class {
     func update(followersCount: String)
     func update(followingCount: String)
     
-    func update(pinnedItems: [RepositoryCellItem])
-    func update(topItems: [RepositoryCellItem])
-    func update(starredItems: [RepositoryCellItem])
+    func update(pinnedItems: [RepositoryCellItem], hasItems: Bool, viewHeight: Int)
+    func update(topItems: [RepositoryCellItem], hasItems: Bool)
+    func update(starredItems: [RepositoryCellItem], hasItems: Bool)
     
     func errorOccured(error: String)
 }
@@ -38,7 +38,7 @@ class ProfileViewController: UIViewController {
         view.backgroundColor = .white
         return view
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -77,7 +77,7 @@ class ProfileViewController: UIViewController {
         alert.addAction(cancel)
         self.present(alert, animated: true)
     }
-
+    
 }
 
 extension ProfileViewController: ProfileViewProtocol {
@@ -106,17 +106,44 @@ extension ProfileViewController: ProfileViewProtocol {
         profileView.lblFollowingCount.text = followingCount
     }
     
-    func update(pinnedItems: [RepositoryCellItem]) {
+    func update(pinnedItems: [RepositoryCellItem], hasItems: Bool, viewHeight: Int) {
+        var height = viewHeight
+        if hasItems {
+            profileView.lblNoPinnedItems.isHidden = true
+            profileView.btnPinnedViewAll.isHidden = false
+        } else {
+            height = 160
+            profileView.lblNoPinnedItems.isHidden = false
+            profileView.btnPinnedViewAll.isHidden = true
+        }
+        profileView.pinnedCollecTionVIewHeightConstraint?.constant = CGFloat(height)
+        UIView.animate(withDuration: 0.5, animations:{
+            self.profileView.layoutIfNeeded()
+        })
         self.pinnedItems = pinnedItems
         profileView.pinnedCollectionView.reloadData()
     }
     
-    func update(topItems: [RepositoryCellItem]) {
+    func update(topItems: [RepositoryCellItem], hasItems: Bool) {
+        if hasItems {
+            profileView.lblNoTopItems.isHidden = true
+            profileView.btnTopViewAll.isHidden = false
+        } else {
+            profileView.lblNoTopItems.isHidden = false
+            profileView.btnTopViewAll.isHidden = true
+        }
         self.topItems = topItems
         profileView.topCollectionView.reloadData()
     }
     
-    func update(starredItems: [RepositoryCellItem]) {
+    func update(starredItems: [RepositoryCellItem], hasItems: Bool) {
+        if hasItems {
+            profileView.lblNoStarredItems.isHidden = true
+            profileView.btnStarredViewAll.isHidden = false
+        } else {
+            profileView.lblNoStarredItems.isHidden = false
+            profileView.btnStarredViewAll.isHidden = true
+        }
         self.starredItems = starredItems
         profileView.starredCollectionView.reloadData()
     }
@@ -167,7 +194,7 @@ extension ProfileViewController: UICollectionViewDataSource {
 }
 
 extension ProfileViewController: UICollectionViewDelegateFlowLayout {
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let screenWidth = collectionView.frame.size.width
         
